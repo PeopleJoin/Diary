@@ -38,7 +38,7 @@ JSON.StringToObject = function(string, separate)
 
 JSON.Length = function(object)
 {
-    if (typeof object !== 'object') return (typeof object === 'array') ? object.length : undefined;
+    if (typeof object === 'array') return object.length;
     var length = 0;
     for (var key in object)
     {
@@ -47,15 +47,14 @@ JSON.Length = function(object)
     return length;
 };
 
-JSON.Push = function(source)
+JSON.SetSeparate = function(object, separate)
 {
-    for(var key in arguments)
+    var string = "", count = 0;
+    for (var key in object)
     {
-        if (arguments[key] == source) continue;
-        if (typeof source === 'array') source.push(arguments[key]);
-        else
-        {
-            source[key] = arguments[key];
-        }
+        count++;
+        if (count == JSON.Length(object)) string += object[key];
+        else string += object[key] + separate;
     }
+    return string;
 };

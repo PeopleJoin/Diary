@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <script src="http://zottce.kd.io:8000/socket.io/socket.io.js"></script>
+        <script src = "http://code.jquery.com/jquery-2.1.0.min.js"></script>
+    </head>
+    <body>
+        <input id = "name" type = "text" value = "your name"><br>
+        <input id = "text" type = "text">
+        <input type = "button" onclick = "Send()" value = "send message"><br>
+        <div id = "chat">
+            <h1>chatik</p>
+        </div>
+        <script>
+            var socket = io.connect('http://zottce.kd.io:8000');
+            socket.on('message', function (data)
+            {
+                var che = document.getElementById("chat");
+                che.innerHTML += "<p>" + data.user + ": " + data.message + "</p>";
+            });
+            
+            function Send()
+            {
+                socket.emit('message', {message: document.getElementById("text").value, user: document.getElementById("name").value});    
+            }
+        </script>
+    </body>
+</html>
